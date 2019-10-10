@@ -1,6 +1,9 @@
-﻿using Microsoft.AspNetCore;
+﻿using api;
+using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace test
 {
@@ -9,7 +12,8 @@ namespace test
         protected override IWebHostBuilder CreateWebHostBuilder()
         {
             return WebHost.CreateDefaultBuilder()
-                .UseStartup<TestStartup>();
+                .UseStartup<TestStartup>()
+                .ConfigureTestServices(services => services.AddControllers().AddApplicationPart(typeof(Startup).Assembly));
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)
